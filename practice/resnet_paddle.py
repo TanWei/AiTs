@@ -1,4 +1,4 @@
-import paddle.vision.transforms as T
+# import paddle.vision.transforms as T
 
 #加载飞桨和相关类库
 import paddle
@@ -7,6 +7,7 @@ import paddle.nn.functional as F
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+from paddle.vision.models import resnet50
 
 class Residual():
     def __init__(self):
