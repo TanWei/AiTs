@@ -81,11 +81,20 @@ class Network(object):
         error = z - y
         cost = np.mean(error*error)
         return cost
-
+    def gradient(self, x, y):
+        z = self.forward(x)
+        gradient_w = (z-y)*x
+        gradient_w = np.mean(gradient_w, axis=0)
+        gradient_w = gradient_w[:, np.newaxis]
+        gradient_b = (z - y)
+        gradient_b = np.mean(gradient_b)      
+        return gradient_w, gradient_b
+    
+    
 net = Network(13)
 z = net.forward(x)
 loss = net.loss(z, y)
-
+# 绘图开始
 w5 = np.arange(-10.0, 10.0, 1.0)
 w9 = np.arange(-10.0, 10.0, 1.0)
 # print(w5, w9)
@@ -109,3 +118,20 @@ w5, w9 = np.meshgrid(w5, w9)
 
 ax.plot_surface(w5, w9, losses, rstride=1, cstride=1, cmap='rainbow')
 plt.show()
+#绘图结束
+gradient_w = (z - y) * x
+gradient_w = np.mean(gradient_w, axis=0)
+gradient_w = gradient_w[:, np.newaxis]
+
+
+z = net.forward(x) #前向传播
+gradient_w = (z - y) * x #计算梯度
+gradient_w = np.mean(gradient_w, axis=0) #计算平均梯度
+gradient_w = gradient_w[:, np.newaxis] #将梯度转换为[13, 1]的形状
+gradient_w
+
+gradient_b = (z - y)
+gradient_b = np.mean(gradient_b)
+# 此处b是一个数值，所以可以直接用np.mean得到一个标量
+gradient_b
+
