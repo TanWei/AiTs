@@ -9,7 +9,7 @@ import random
 
 def load_data():
     # 从文件导入数据
-    datafile = './work/housing.data'
+    datafile = '/Users/leilei/MyWorkSpace/ml/AiTs/practice/housePrice/housing.data'
     data = np.fromfile(datafile, sep=' ')
 
     # 每条数据包括14项，其中前面13项是影响因素，第14项是相应的房屋价格中位数
@@ -63,7 +63,7 @@ for epoch_id in range(EPOCH_NUM):
     mini_batches = [training_data[k:k+BATCH_SIZE] 
                     for k in range(0, len(training_data), BATCH_SIZE)
                  ]
-    print(mini_batches.shape)
+    #print(mini_batches.shape)
     for iter_id, mini_batch in enumerate(mini_batches):
         x = np.array(mini_batch[:, :-1])
         y = np.array(mini_batch[:, -1:])
@@ -72,6 +72,10 @@ for epoch_id in range(EPOCH_NUM):
         prices = paddle.to_tensor(y)
         
         #前向传播
-        predicts = model.forward(x)
+        predicts = model(x)
         
         loss = F.square_error_cost(predicts, label=prices)
+        avg_loss = paddle.mean(loss)
+        avg_loss.backward()
+        opt.step()
+        opt.clear_grad()
