@@ -5,8 +5,12 @@ import numpy as np
 import paddle
 import paddle.nn as nn
 import paddle.nn.functional as F
+import sys  
+sys.path.append(r'/Users/leilei/MyWorkSpace/ml/AiTs/practice') 
 from paddle_train import train_pm
-
+'''
+implement resnet 50
+'''
 # ResNet中使用了BatchNorm层，在卷积层的后面加上BatchNorm以提升数值稳定性
 # 定义卷积批归一化块
 class ConvBNLayer(paddle.nn.Layer):
@@ -143,6 +147,7 @@ class ResNet(paddle.nn.Layer):
             filter_size=7,
             stride=2,
             act='relu')
+        # padding = (7 - 1) // 2
         self.pool2d_max = nn.MaxPool2D(
             kernel_size=3,
             stride=2,
@@ -151,6 +156,7 @@ class ResNet(paddle.nn.Layer):
         # ResNet的第二到第五个模块c2、c3、c4、c5
         self.bottleneck_block_list = []
         num_channels = 64
+        # depth = [3, 4, 6, 3]
         for block in range(len(depth)):
             shortcut = False
             for i in range(depth[block]):

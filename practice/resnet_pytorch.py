@@ -2,7 +2,9 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from d2l import torch as d2l
-
+'''
+implement resnet 18
+'''
 class Residual(nn.Module):
     def __init__(self, input_channels, num_channels,
                  use_1x1conv=False, strides=1):

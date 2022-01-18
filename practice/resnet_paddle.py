@@ -12,10 +12,16 @@ import matplotlib.pyplot as plt
 from paddle.vision.models import resnet50
 from paddle_train import train_pm
 
+'''
+implement resnet 50
+'''
+
 class Residual(nn.Layer):
     def __init__(self, input_channels, num_channels,
                  use_1x1conv=False, strides=1):
         super(Residual, self).__init__()
+        
+        
         self.conv1 = nn.Conv2D(input_channels, num_channels,
                                kernel_size=3, padding=1, stride=strides, bias_attr=False)
         self.conv2 = nn.Conv2D(num_channels, num_channels,
@@ -26,6 +32,7 @@ class Residual(nn.Layer):
                                    kernel_size=1, stride=strides, bias_attr=False)
         else:
             self.conv3 = None
+            
         self.bn1 = nn.BatchNorm2D(num_channels);
         self.bn2 = nn.BatchNorm2D(num_channels)
     def forward(self, X):
